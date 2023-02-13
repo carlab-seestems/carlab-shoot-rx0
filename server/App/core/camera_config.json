@@ -23,6 +23,10 @@
         {
             "name": "/main/imgsettings/whitebalance",
             "value": "Automatic"
+        },
+        {
+            "name": "/main/capturesettings/focusmode",
+            "value": "Automatic"
         }
     ]
 }

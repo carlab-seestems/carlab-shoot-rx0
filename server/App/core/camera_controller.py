@@ -64,11 +64,32 @@ class CameraController(object):
 
     def _take_and_save_picture(self, camera):
         try:
-            camera.wait_for_event(7000)
-            time.sleep(7)
+            #time.sleep(7)
             self._set_camera_config(camera)
-            camera_filepath = camera.capture(gp.GP_CAPTURE_IMAGE)
+            camera.trigger_capture()
+            event = camera.wait_for_event(3000)
+            count = 0
+            while event[0] != 2:
+                if count > 10:
+                    e = Exception('Nombre de tentatives de prise de photo (10) dépassé.')
+                    logger.error(e)
+                    raise HTTPException(
+                        status_code=400, detail="La photo n'a pas pu être prise : Nombre de tentatives de prise de photo (10) dépassé. ")
+                if event[0] != 0:
+                    camera.trigger_capture()
+                    count += 1
+
+                event = camera.wait_for_event(100)
+
+                print(event)
+            camera_filepath = event[1]
+            #camera_filepath = camera.capture(gp.GP_CAPTURE_IMAGE)
+            # camera_filepath = camera.trigger_capture()
+            # camera.wait_for_event(10000)
+
+
         except Exception as e:
+
             camera.exit()
 
             logger.error(
@@ -101,3 +122,8 @@ class CameraController(object):
 
         buf = self._take_and_save_picture(camera)
         return buf
+
+if __name__ == '__main__':
+    camera = CameraController()
+    for i in range(100):
+        camera.take_picture()
