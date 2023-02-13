@@ -8,4 +8,4 @@ services:
     volumes:
       - '/dev/bus/usb:/dev/bus/usb'
     ports:
-      - '8080:8081'
+      - '8081:8081'
