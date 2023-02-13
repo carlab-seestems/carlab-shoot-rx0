@@ -1,0 +1,28 @@
+{
+    "configs": [
+        {
+            "name": "/main/imgsettings/iso",
+            "value": "200"
+        },
+        {
+            "name": "/main/capturesettings/aspectratio",
+            "value": "3/2"
+        },
+        {
+            "name": "/main/capturesettings/imagequality",
+            "value": "Extra Fine"
+        },
+        {
+            "name": "/main/capturesettings/shutterspeed",
+            "value": "1/50"
+        },
+        {
+            "name": "/main/capturesettings/exposuremetermode",
+            "value": "Multi"
+        },
+        {
+            "name": "/main/imgsettings/whitebalance",
+            "value": "Automatic"
+        }
+    ]
+}

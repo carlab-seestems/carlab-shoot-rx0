@@ -1,0 +1,10 @@
+
+
+fastapi==0.91.0
+gphoto2==2.3.4
+
+loguru==0.6.0
+
+
+uvicorn==0.20.0
+

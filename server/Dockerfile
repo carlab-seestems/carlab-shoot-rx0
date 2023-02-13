@@ -16,14 +16,13 @@ RUN apk add libgphoto2-dev \
     python3-dev \ 
     linux-headers  \
     musl-dev
-     
-COPY ./ /PlateauController/
 
-WORKDIR /PlateauController/
+     
+COPY ./ /carlab-shoot/
+
+WORKDIR /carlab-shoot/
 
 RUN pip3 install -r requirements.txt
-
-ENV FLASK_APP=PlateauController
 
 ENTRYPOINT [ "sh" ]
 CMD [ "launch.sh" ]

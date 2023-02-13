@@ -1,0 +1,11 @@
+version: "3.2"
+services:
+  server:
+    restart: always
+    build: "./server"
+    privileged: true
+    volumes:
+      - "/dev/bus/usb:/dev/bus/usb"
+    ports:
+      - "8080:8081"
+ 
