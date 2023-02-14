@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Response
 from ..core.camera_controller import CameraController
 from fastapi.responses import StreamingResponse
 
@@ -9,9 +9,6 @@ router = APIRouter()
 @router.get('/', responses={200: {"content": {"image/jpeg": {}}}})
 def take_picture(action):
     buf = camera_controller.take_picture()
-    
-        
-    buf.seek(0)
-    return StreamingResponse(buf, media_type="image/jpeg",
-    headers={'Content-Disposition': 'inline; filename="picture.jpg"'})
 
+    buf.seek(0)
+    return Response(content=buf.read(), media_type="image/jpeg")
