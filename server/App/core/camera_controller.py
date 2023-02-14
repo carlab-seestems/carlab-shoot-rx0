@@ -72,7 +72,7 @@ class CameraController(object):
             camera.exit()
 
             logger.error(
-                'La photo n\'a pas pu être prise :'.format(e))
+                'La photo n\'a pas pu être prise : {}'.format(e))
             raise HTTPException(
                 status_code=400, detail="La photo n'a pas pu être prise")
         try:
