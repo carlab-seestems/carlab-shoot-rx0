@@ -1,0 +1,32 @@
+{
+    "configs": [
+        {
+            "name": "/main/capturesettings/imagequality",
+            "value": "Extra Fine"
+        },
+        {
+            "name": "/main/capturesettings/exposuremetermode",
+            "value": "Multi"
+        },
+        {
+            "name": "/main/imgsettings/whitebalance",
+            "value": "Automatic"
+        },
+        {
+            "name": "/main/capturesettings/focusmode",
+            "value": "Automatic"
+        },
+        {
+            "name": "/main/capturesettings/shutterspeed",
+            "value": "1/50"
+        }
+    ],
+    "mode_on": {
+        "name": "/main/capturesettings/expprogram",
+        "value": "M"
+    },
+    "mode_off": {
+        "name": "/main/capturesettings/expprogram",
+        "value": "P"
+    }
+}
