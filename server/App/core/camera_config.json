@@ -32,7 +32,7 @@
         },
         {
             "name": "/main/imgsettings/colortemperature",
-            "value": "4500"
+            "value": 4500
         }
     ]
 }
