@@ -22,7 +22,7 @@
         },
         {
             "name": "/main/imgsettings/whitebalance",
-            "value": "Automatic"
+            "value": 10
         },
         {
             "name": "/main/capturesettings/focusmode",
