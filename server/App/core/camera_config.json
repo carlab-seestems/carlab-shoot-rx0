@@ -2,31 +2,33 @@
     "configs": [
         {
             "name": "/main/imgsettings/iso",
-            "value": "200"
+            "value": "160",
+            "index": 4
         },
         {
             "name": "/main/capturesettings/aspectratio",
-            "value": "3/2"
+            "value": "3/2",
+            "index": 0
         },
         {
             "name": "/main/capturesettings/imagequality",
-            "value": "Extra Fine"
+            "value": "Extra Fine",
+            "index": 2
         },
         {
             "name": "/main/capturesettings/shutterspeed",
-            "value": "1/50"
-        },
-        {
-            "name": "/main/capturesettings/exposuremetermode",
-            "value": "Multi"
+            "value": "1/50",
+            "index": 11
         },
         {
             "name": "/main/imgsettings/whitebalance",
-            "value": 10
+            "value": "Choose Color Temperature",
+            "index": 10
         },
         {
             "name": "/main/capturesettings/focusmode",
-            "value": "Automatic"
+            "value": "Automatic",
+            "index": 1
         }
     ]
 }
