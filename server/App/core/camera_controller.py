@@ -47,9 +47,60 @@ class CameraController(object):
                 status_code=400, detail='Impossible de charger le fichier de configuration camera : {}')
         return config
 
+    def set_mode_on(self, camera, config_cam):
+        child = config_cam
+        for child_name in self.config["mode_on"]['name'].split('/')[2:]:
+            child = child.get_child_by_name(child_name)
+        child.set_value(self.config["mode_on"]['value'])
+        camera.set_config(config_cam)
+
+    def set_mode_off(self, camera, config_cam):
+        child = config_cam
+        for child_name in self.config["mode_off"]['name'].split('/')[2:]:
+            child = child.get_child_by_name(child_name)
+        child.set_value(self.config["mode_off"]['value'])
+        camera.set_config(config_cam)
+
+    def set_iso(self, iso):
+        camera = self._load_camera()
+        main_widget = camera.get_config()
+        child = main_widget
+        for child_name in "/main/imgsettings/iso".split('/')[2:]:
+            child = child.get_child_by_name(child_name)
+        child.set_value(iso)
+        event = camera.wait_for_event(3000)
+
+        self.set_mode_off(camera, main_widget)
+        time.sleep(2)
+        camera.set_config(main_widget)
+        time.sleep(2)
+        self.set_mode_on(camera, main_widget)
+        camera.exit()
+
+    def set_temp(self, temp):
+        camera = self._load_camera()
+        main_widget = camera.get_config()
+        child = main_widget
+        for child_name in "/main/imgsettings/whitebalance".split('/')[2:]:
+            child = child.get_child_by_name(child_name)
+        child.set_value("Choose Color Temperature")
+        event = camera.wait_for_event(3000)
+
+        for child_name in "/main/imgsettings/colortemperature".split('/')[2:]:
+            child = child.get_child_by_name(child_name)
+        child.set_value(float(temp))
+        event = camera.wait_for_event(3000)
+
+        self.set_mode_off(camera, main_widget)
+        time.sleep(2)
+        camera.set_config(main_widget)
+        time.sleep(2)
+        self.set_mode_on(camera, main_widget)
+        camera.exit()
+
     def _set_camera_config(self, camera):
         main_widget = camera.get_config()
-
+        set_config = False
         for config in self.config['configs']:
             child = main_widget
             for child_name in config["name"].split('/')[2:]:
@@ -58,45 +109,51 @@ class CameraController(object):
             logger.debug('Config value {} set to {}'.format(
                 config["name"], config["value"]))
 
-        camera.wait_for_event(5000)
-        time.sleep(5)
-        camera.set_config(main_widget)
+        if set_config:
+            event = camera.wait_for_event(3000)
+
+            self.set_mode_off(camera, main_widget)
+            time.sleep(2)
+            camera.set_config(main_widget)
+            time.sleep(2)
+            self.set_mode_on(camera, main_widget)
 
     def _take_and_save_picture(self, camera):
-        try:
-            #time.sleep(7)
-            self._set_camera_config(camera)
-            camera.trigger_capture()
-            event = camera.wait_for_event(3000)
-            count = 0
-            while event[0] != 2:
-                if count > 10:
-                    e = Exception('Nombre de tentatives de prise de photo (10) dépassé.')
-                    logger.error(e)
-                    raise HTTPException(
-                        status_code=400, detail="La photo n'a pas pu être prise : Nombre de tentatives de prise de photo (10) dépassé. ")
-                if event[0] != 0:
-                    camera.trigger_capture()
-                    count += 1
+        # try:
+        # time.sleep(7)
+        self._set_camera_config(camera)
+        time.sleep(1)
+        camera.trigger_capture()
+        event = camera.wait_for_event(3000)
+        count = 0
+        while event[0] != 2:
+            if count > 10:
+                e = Exception(
+                    'Nombre de tentatives de prise de photo (10) dépassé.')
+                logger.error(e)
+                raise HTTPException(
+                    status_code=400, detail="La photo n'a pas pu être prise : Nombre de tentatives de prise de photo (10) dépassé. ")
+            if event[0] != 0:
+                camera.trigger_capture()
+                count += 1
 
-                event = camera.wait_for_event(100)
+            event = camera.wait_for_event(100)
 
-                print(event)
-            camera_filepath = event[1]
-            #camera_filepath = camera.capture(gp.GP_CAPTURE_IMAGE)
-            # camera_filepath = camera.trigger_capture()
-            # camera.wait_for_event(10000)
+            print(event)
+        camera_filepath = event[1]
+        # camera_filepath = camera.capture(gp.GP_CAPTURE_IMAGE)
+        # camera_filepath = camera.trigger_capture()
+        # camera.wait_for_event(10000)
 
+        # except Exception as e:
 
-        except Exception as e:
+        #     camera.exit()
 
-            camera.exit()
-
-            logger.error(
-                'La photo n\'a pas pu être prise : {}'.format(e))
-            logger.error(e)
-            raise HTTPException(
-                status_code=400, detail="La photo n'a pas pu être prise")
+        #     logger.error(
+        #         'La photo n\'a pas pu être prise : {}'.format(e))
+        #     logger.error(e)
+        #     raise HTTPException(
+        #         status_code=400, detail="La photo n'a pas pu être prise")
         try:
 
             camera_file = camera.file_get(
@@ -122,6 +179,7 @@ class CameraController(object):
 
         buf = self._take_and_save_picture(camera)
         return buf
+
 
 if __name__ == '__main__':
     camera = CameraController()

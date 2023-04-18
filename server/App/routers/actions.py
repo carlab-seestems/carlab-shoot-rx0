@@ -12,3 +12,13 @@ def take_picture(action):
 
     buf.seek(0)
     return Response(content=buf.read(), media_type="image/jpeg")
+
+
+@router.get('/set_iso', responses={200: {"content": {"image/jpeg": {}}}})
+def set_iso(iso):
+    camera_controller.set_iso(iso)
+
+
+@router.get('/set_color_temp', responses={200: {"content": {"image/jpeg": {}}}})
+def set_color_temp(temp):
+    camera_controller.set_temp(temp)

@@ -1,11 +1,6 @@
 {
     "configs": [
         {
-            "name": "/main/imgsettings/iso",
-            "value": "160",
-            "index": 4
-        },
-        {
             "name": "/main/capturesettings/aspectratio",
             "value": "3/2",
             "index": 0
@@ -21,18 +16,17 @@
             "index": 11
         },
         {
-            "name": "/main/imgsettings/whitebalance",
-            "value": "Choose Color Temperature",
-            "index": 10
-        },
-        {
             "name": "/main/capturesettings/focusmode",
             "value": "Automatic",
             "index": 1
-        },
-        {
-            "name": "/main/imgsettings/colortemperature",
-            "value": 4500
         }
-    ]
+    ],
+    "mode_on": {
+        "name": "/main/capturesettings/expprogram",
+        "value": "M"
+    },
+    "mode_off": {
+        "name": "/main/capturesettings/expprogram",
+        "value": "P"
+    }
 }
