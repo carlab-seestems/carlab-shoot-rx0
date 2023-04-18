@@ -88,8 +88,10 @@ class CameraController(object):
             if child.get_value() != config["value"]:
 
                 set_config = True
-                child.set_value(child.get_choice(config["index"]))
-
+                try:
+                    child.set_value(child.get_choice(config["index"]))
+                except KeyError as e:
+                    child.set_value(config["value"])
                 logger.debug('Config value {} set to {}'.format(
                     config["name"], config["value"]))
 

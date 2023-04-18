@@ -29,6 +29,10 @@
             "name": "/main/capturesettings/focusmode",
             "value": "Automatic",
             "index": 1
+        },
+        {
+            "name": "/main/imgsettings/colortemperature",
+            "value": "4500"
         }
     ]
 }
