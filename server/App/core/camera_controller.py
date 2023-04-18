@@ -85,7 +85,7 @@ class CameraController(object):
             child = child.get_child_by_name(child_name)
         child.set_value("Choose Color Temperature")
         event = camera.wait_for_event(3000)
-
+        child = main_widget
         for child_name in "/main/imgsettings/colortemperature".split('/')[2:]:
             child = child.get_child_by_name(child_name)
         child.set_value(float(temp))
