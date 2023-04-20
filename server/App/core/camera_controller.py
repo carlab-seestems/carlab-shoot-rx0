@@ -98,6 +98,23 @@ class CameraController(object):
         self.set_mode_on(camera, main_widget)
         camera.exit()
 
+    def set_shutter_speed(self, shutter_speed):
+        camera = self._load_camera()
+        main_widget = camera.get_config()
+        child = main_widget
+
+        for child_name in "/main/capturesettings/shutterspeed".split('/')[2:]:
+            child = child.get_child_by_name(child_name)
+        child.set_value(str(shutter_speed))
+        event = camera.wait_for_event(3000)
+
+        self.set_mode_off(camera, main_widget)
+        time.sleep(2)
+        camera.set_config(main_widget)
+        time.sleep(2)
+        self.set_mode_on(camera, main_widget)
+        camera.exit()
+
     def _set_camera_config(self, camera):
         main_widget = camera.get_config()
         set_config = False
